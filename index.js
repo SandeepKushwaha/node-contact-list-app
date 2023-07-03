@@ -13,6 +13,12 @@ app.get('/', function (request, response) {
     return response.render('index', {title: "Contact List App"});
 });
 
+// creating the request for 'practice.ejs' file
+app.get('/practice', function (request, response) {
+    return response.render('practice', {
+        title: "Practice EJS Playground"
+    });
+});
 
 app.listen(port, function (err) {
     if (err)
