@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Rendering the variable in EJS -->
     <title>
-        <%= title %>
+        <%= locals.title %>
+        <!-- <%= title %> -->
     </title>
 </head>
 <body>
-    <h1>Rendered from EJS views</h1>
+    <h1>Contact List</h1>
+    <div class="contacts">
+        <ul>
+            <% for (let i of contact_list) { %>
+                <li>
+                    <p><strong><%= i.name %></strong>: <%= i.phone %></p>
+                </li>
+            <% } %>
+        </ul>
+    </div>
 </body>
 </html>
