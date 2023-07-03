@@ -10,7 +10,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.get('/', function (request, response) { 
     console.log(__dirname);
     // response.send('<h1>Cool, it is running! or is it?</h1>');
-    return response.render('index');
+    return response.render('index', {title: "Contact List App"});
 });
 
 
