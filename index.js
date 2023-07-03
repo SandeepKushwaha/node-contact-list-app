@@ -7,6 +7,11 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+})); // adding middleware parser provided by express
+
 let contactList = [
     {
         name: "Amit",
@@ -32,6 +37,7 @@ let contactList = [
 
 
 app.get('/', function (request, response) {
+    // console.log(request);
     console.log(__dirname);
     // response.send('<h1>Cool, it is running! or is it?</h1>');
     return response.render('index', {
@@ -48,7 +54,22 @@ app.get('/practice', function (request, response) {
 });
 
 app.post('/create-contact', function (request, response) { 
-    return response.redirect('/practice');
+    // return response.redirect('/practice');
+    // console.log(request);
+    console.log(request.body);
+    console.log("Name:", request.body.name);
+    console.log("Phone:", request.body.phone);
+
+    // appending the details to contact
+    // contactList.push({
+    //     name: request.body.name,
+    //     phone: request.body.phone
+    // });
+
+    contactList.push(request.body);
+
+    // return response.redirect('/');
+    return response.redirect('back'); // if you don't remember the url
 });
 
 app.listen(port, function (err) {
