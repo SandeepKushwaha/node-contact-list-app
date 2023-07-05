@@ -12,6 +12,18 @@ app.use(express.urlencoded({
     extended: true
 })); // adding middleware parser provided by express
 
+app.use(function (request, response, next) {
+    request.MyCustomProperty = 'Middleware is here.';
+    console.log('middleware 1: called.');
+    next(); // next() called the next middleware.
+});
+
+app.use(function (request, response, next) {
+    console.log('middleware 2: called.');
+    console.log('custom property:', request.MyCustomProperty);
+    next();
+});
+
 let contactList = [
     {
         name: "Amit",
@@ -38,6 +50,7 @@ let contactList = [
 
 app.get('/', function (request, response) {
     // console.log(request);
+    console.log("Inside the '/' router customProperty:", request.MyCustomProperty);
     console.log(__dirname);
     // response.send('<h1>Cool, it is running! or is it?</h1>');
     return response.render('index', {
