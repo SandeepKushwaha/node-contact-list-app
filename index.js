@@ -88,6 +88,34 @@ app.post('/create-contact', function (request, response) {
     return response.redirect('back'); // if you don't remember the url
 });
 
+// get request for /delete-contact with request query param
+app.get('/delete-contact/', function (request, response) { 
+    console.log('delete-contact is called.');
+    let phone = request.query.phone;
+    console.log('Phone to delete:', request.query);
+    let contactIndex = contactList.findIndex(contact => contact.phone == phone);
+
+    if (contactIndex != -1) {
+        contactList.splice(contactIndex, 1);
+    }
+
+    return response.redirect('back');
+});
+
+// get request for /delete-contact with request param 
+// app.get('/delete-contact/:phone', function (request, response) { 
+//     console.log('delete-contact is called.');
+//     let phone = request.params.phone;
+//     console.log('Phone to delete:', request.params);
+//     let contactIndex = contactList.findIndex(contact => contact.phone == phone);
+
+//     if (contactIndex != -1) {
+//         contactList.splice(contactIndex, 1);
+//     }
+
+//     return response.redirect('back');
+// });
+
 app.listen(port, function (err) {
     if (err)
         console.log('Error in running the server', err);

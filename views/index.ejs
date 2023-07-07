@@ -8,9 +8,10 @@
             <%= locals.title %>
             <!-- <%= title %> -->
         </title>
-        <link rel="stylesheet" href="./css/index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
         <script src="https://kit.fontawesome.com/ab62a466e5.js" crossorigin="anonymous"></script>
+        <!-- Adding our style here for customizition -->
+        <link rel="stylesheet" href="./css/index.css">
     </head>
     <body>
         <h1 class="app-title"><span class="fa-solid fa-book-open-reader"></span> Contact List</h1>
@@ -19,7 +20,17 @@
                 <% for (let i of contact_list) { %>
                     <li>
                         <p><%= i.name %></p>
-                        <p><%= i.phone %></p>
+                        <p>
+                            <%= i.phone %> &nbsp;
+                            <!-- request param -->
+                            <!-- <a href="/delete-contact/<%= i.phone %>" id="delete-btn" class="btn-del">
+                                <span class="fa-solid fa-trash"></span>
+                            </a> -->
+                            <!-- request query param-->
+                            <a href="/delete-contact/?phone=<%= i.phone %>" id="delete-btn" class="btn-del">
+                                <span class="fa-solid fa-trash"></span>
+                            </a>
+                        </p>
                     </li>
                 <% } %>
             </ul>

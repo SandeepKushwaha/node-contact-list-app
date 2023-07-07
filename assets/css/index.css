@@ -25,16 +25,16 @@ body {
 .contacts ul {
     list-style-type: none;
     margin: 28px 0px;
-    padding: 2px;
+    padding: 4px;
     border: 1px solid #c9c9c996;
     border-radius: 8px;
-    box-shadow: 0px 1px 1px #424242e5;
+    box-shadow: 0px 2px 6px #3e3e3ea3;
 }
 
 .contacts ul li {
     padding: 8px 2px;
-    margin: 4px 0px;
-    border-radius: 2px;
+    margin: 8px 0px;
+    border-radius: 4px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -64,16 +64,25 @@ body {
     padding: 2px 6px;
 }
 
+.contacts ul li p:nth-child(odd) {
+    text-transform: capitalize;
+}
+
 .add-contact {
     margin: 0 auto;
     max-width: 80%;
     width: 66%;
+    border-radius: 6px;
+    box-shadow: 0px 2px 6px #3e3e3ea3;
 }
 
 .add-contact form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 90%;
+    margin: 10px auto;
+    padding: 20px 0px;
 }
 
 input {
@@ -90,4 +99,13 @@ input[type="submit"] {
     background-color: #545454d1;
     color: #fff;
     cursor: pointer;
+}
+
+.btn-del {
+    color: #ff2f2fe3;
+    /* display: none; */
+}
+
+.btn-del:hover {
+    color: #fff;
 }
