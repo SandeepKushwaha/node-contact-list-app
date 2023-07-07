@@ -12,6 +12,9 @@ app.use(express.urlencoded({
     extended: true
 })); // adding middleware parser provided by express
 
+// accessing static files
+app.use(express.static('assets'));
+
 app.use(function (request, response, next) {
     request.MyCustomProperty = 'Middleware is here.';
     console.log('middleware 1: called.');

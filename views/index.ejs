@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Rendering the variable in EJS -->
-    <title>
-        <%= locals.title %>
-        <!-- <%= title %> -->
-    </title>
-</head>
-<body>
-    <h1>Contact List</h1>
-    <div class="contacts">
-        <ul>
-            <% for (let i of contact_list) { %>
-                <li>
-                    <p><strong><%= i.name %></strong>: <%= i.phone %></p>
-                </li>
-            <% } %>
-        </ul>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Rendering the variable in EJS -->
+        <title>
+            <%= locals.title %>
+            <!-- <%= title %> -->
+        </title>
+        <link rel="stylesheet" href="./css/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <script src="https://kit.fontawesome.com/ab62a466e5.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h1 class="app-title"><span class="fa-solid fa-book-open-reader"></span> Contact List</h1>
+        <div class="contacts">
+            <ul>
+                <% for (let i of contact_list) { %>
+                    <li>
+                        <p><%= i.name %></p>
+                        <p><%= i.phone %></p>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
 
-    <form action="/create-contact" method="post">
-        <input type="text" name="name" id="name" placeholder="Enter Name" required />
-        <input type="tel" name="phone" id="phone" placeholder="Enter Phone" required />
-        <input type="submit" value="Add Contact">
-    </form>
-</body>
+        <section class="add-contact">
+            <form action="/create-contact" method="post">
+                <input type="text" name="name" id="name" placeholder="Enter Name" required />
+                <input type="tel" name="phone" id="phone" placeholder="Enter Phone" required />
+                <input type="submit" value="Add Contact">
+            </form>
+        </section>
+        <script type="text/javascript" src="./js/index.js"></script>
+    </body>
 </html>
