@@ -150,16 +150,34 @@ app.post('/create-contact', function (request, response) {
 
 // get request for /delete-contact with request query param
 app.get('/delete-contact/', function (request, response) { 
-    console.log('delete-contact is called.');
-    let phone = request.query.phone;
-    console.log('Phone to delete:', request.query);
-    let contactIndex = contactList.findIndex(contact => contact.phone == phone);
+    // console.log('delete-contact is called.');
+    // let phone = request.query.phone;
+    // console.log('Phone to delete:', request.query);
+    // let contactIndex = contactList.findIndex(contact => contact.phone == phone);
 
-    if (contactIndex != -1) {
-        contactList.splice(contactIndex, 1);
-    }
+    // if (contactIndex != -1) {
+        // contactList.splice(contactIndex, 1);
+    // }
 
-    return response.redirect('back');
+    // return response.redirect('back');
+
+    // Deleting object from MongoDB
+    // Get the id from query in ui
+    let id = request.query.id;
+    console.log('Query Object to delete:', request.query);
+
+    // find the contact in the db using id and delete
+    Contact.findByIdAndDelete(id)
+        .exec()
+        .then(deleteObject => {
+            console.log('Deleted Object:', deleteObject);
+            return response.redirect('back');
+        })
+        .catch(error => {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal server error' });
+        });
+
 });
 
 // get request for /delete-contact with request param 
