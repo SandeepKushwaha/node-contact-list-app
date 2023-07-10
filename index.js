@@ -3,6 +3,7 @@ const path = require('path');
 const port = 8000;
 
 const db = require('./config/mongoos');
+const Contact = require('./models/contact');
 
 const app = express();
 
@@ -18,14 +19,14 @@ app.use(express.urlencoded({
 app.use(express.static('assets'));
 
 app.use(function (request, response, next) {
-    request.MyCustomProperty = 'Middleware is here.';
-    console.log('middleware 1: called.');
+    // request.MyCustomProperty = 'Middleware is here.';
+    // console.log('middleware 1: called.');
     next(); // next() called the next middleware.
 });
 
 app.use(function (request, response, next) {
-    console.log('middleware 2: called.');
-    console.log('custom property:', request.MyCustomProperty);
+    // console.log('middleware 2: called.');
+    // console.log('custom property:', request.MyCustomProperty);
     next();
 });
 
@@ -55,13 +56,42 @@ let contactList = [
 
 app.get('/', function (request, response) {
     // console.log(request);
-    console.log("Inside the '/' router customProperty:", request.MyCustomProperty);
-    console.log(__dirname);
+    // console.log("Inside the '/' router customProperty:", request.MyCustomProperty);
+    // console.log(__dirname);
     // response.send('<h1>Cool, it is running! or is it?</h1>');
-    return response.render('index', {
-        title: "Contact List App",
-        contact_list: contactList
+    // return response.render('index', {
+    //     title: "Contact List App",
+    //     contact_list: contactList
+    // });
+    // Error Code
+    /*
+    Contact.find({}, function (error, contacts) { 
+        if (error) {
+            console.log('Error in fatching contacts from db.');
+            return;
+        }
+
+        return response.render('index', {
+            title: "Contact List App",
+            contact_list: contacts
+        });
     });
+    */
+    // new Code
+    Contact.find({})
+        .then(contacts => { 
+            return response.render('index', {
+                title: "Contact List App",
+                contact_list: contacts // result
+            });
+        })
+        .catch(error => { 
+            if (error) {
+                console.log('Error in fatching contacts from db.');
+                return;
+            }
+        });
+
 });
 
 // creating the request for 'practice.ejs' file
@@ -74,9 +104,9 @@ app.get('/practice', function (request, response) {
 app.post('/create-contact', function (request, response) { 
     // return response.redirect('/practice');
     // console.log(request);
-    console.log(request.body);
-    console.log("Name:", request.body.name);
-    console.log("Phone:", request.body.phone);
+    // console.log(request.body);
+    // console.log("Name:", request.body.name);
+    // console.log("Phone:", request.body.phone);
 
     // appending the details to contact
     // contactList.push({
@@ -84,10 +114,38 @@ app.post('/create-contact', function (request, response) {
     //     phone: request.body.phone
     // });
 
-    contactList.push(request.body);
-
+    // contactList.push(request.body);
+    
     // return response.redirect('/');
-    return response.redirect('back'); // if you don't remember the url
+    // return response.redirect('back'); // if you don't remember the url
+
+    // populating the DB
+    /* // error code for
+    Contact.create({
+        name: request.body.name,
+        phone: request.body.phone
+    }, function (error, newContact) {
+        if (error) {
+            console.log('error is creating a contact!');
+            return;
+        }
+
+        console.log('*****************', newContact);
+        return response.redirect('back');
+    });
+    */
+    // new code
+    Contact.create({
+        name: request.body.name,
+        phone: request.body.phone
+    }).then(result => {
+        console.log('Contact Object for MongoDB:', result);
+        return response.redirect('back');
+    }).catch(error => {
+        console.log('error is creating a contact!');
+        return;
+    });
+
 });
 
 // get request for /delete-contact with request query param
